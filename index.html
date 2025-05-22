@@ -25,8 +25,11 @@
               sans: ['"Bai Jamjuree"', "sans-serif"],
             },
             animation: {
-              "spin-slow": "spin 8s linear infinite",
+              "spin-slow": "spin 16s linear infinite",
+              "spin-medium": "spin 8s linear infinite",
               float: "float 6s ease-in-out infinite",
+              bounce: "bounce 1s infinite",
+              pulse: "pulse 2s infinite",
             },
             keyframes: {
               float: {
@@ -58,7 +61,13 @@
       }
 
       .tire-spin {
-        animation: spin-slow 8s linear infinite;
+        animation: spin-medium 8s linear infinite;
+        transform-origin: center center;
+      }
+
+      .tire-spin-slow {
+        animation: spin-slow 16s linear infinite;
+        transform-origin: center center;
       }
 
       .tire-float {
@@ -146,40 +155,38 @@
         left: 100%;
       }
 
-      .brand-logo {
-        filter: grayscale(100%) brightness(0.8);
+      .brand-logo-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 12px;
+        border: 1px solid rgba(0, 198, 255, 0.1);
         transition: all 0.4s ease;
       }
 
-      .brand-logo:hover {
-        filter: grayscale(0%) brightness(1.1);
+      .brand-logo-container:hover {
+        background: rgba(0, 198, 255, 0.05);
+        border-color: rgba(0, 198, 255, 0.3);
         transform: scale(1.05);
       }
 
-      /* Efecto para los badges de producto */
+      .brand-logo {
+        filter: brightness(0) invert(1) opacity(0.9);
+        transition: all 0.4s ease;
+      }
+
+      .brand-logo-container:hover .brand-logo {
+        filter: brightness(1) invert(0) opacity(1);
+      }
+
       .product-badge {
         animation: pulse 2s infinite;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      /* Mejora para las cards de producto */
       .product-card:hover {
         transform: translateY(-5px) scale(1.02);
         box-shadow: 0 20px 25px -5px rgba(0, 123, 255, 0.2);
       }
 
-      /* Efecto para el contador del carrito */
       .cart-counter {
         transition: all 0.3s ease;
       }
@@ -187,6 +194,21 @@
       .cart-link:hover .cart-counter {
         transform: scale(1.1);
         background-color: #ff5722;
+      }
+
+      .dropdown-fade {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
@@ -201,9 +223,10 @@
         <div class="flex items-center space-x-3">
           <div class="relative w-12 h-12">
             <img
-              src="https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png"
+              src="media/neumatico.png"
               alt="Neumajet"
               class="w-full h-full object-contain tire-spin opacity-90"
+              onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
             />
             <div
               class="absolute inset-0 rounded-full border-2 border-transparent border-t-primary border-r-secondary animate-spin opacity-80"
@@ -231,17 +254,29 @@
             >Contacto</a
           >
         </nav>
-        <div class="flex items-center space-x-4">
-          <a href="#" class="text-light hover:text-white relative">
+        <div class="flex items-center space-x-6">
+          <a
+            href="#"
+            class="text-light hover:text-primary transition relative group"
+          >
             <i class="fas fa-user text-xl"></i>
             <span class="sr-only">Login</span>
+            <span
+              class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"
+            ></span>
           </a>
-          <a href="#" class="text-light hover:text-white relative">
+          <a
+            href="#"
+            class="text-light hover:text-primary transition relative group cart-link"
+          >
             <i class="fas fa-shopping-cart text-xl"></i>
             <span
-              class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+              class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center cart-counter"
               >0</span
             >
+            <span
+              class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"
+            ></span>
           </a>
           <button class="md:hidden text-light hover:text-white">
             <i class="fas fa-bars text-xl"></i>
@@ -250,10 +285,10 @@
       </div>
     </header>
 
-    <!-- User Dropdown (debe aparecer al hacer clic en el ícono de usuario) -->
+    <!-- User Dropdown -->
     <div
       id="userDropdown"
-      class="hidden absolute right-4 top-16 mt-2 w-48 bg-darker rounded-md shadow-lg z-50 border border-gray-700"
+      class="hidden absolute right-4 top-16 mt-2 w-48 bg-darker rounded-md shadow-lg z-50 border border-gray-700 dropdown-fade"
     >
       <div class="py-1">
         <a
@@ -330,7 +365,8 @@
               <img
                 src="media/neumatico.png"
                 alt="Neumático"
-                class="w-full h-auto object-contain"
+                class="w-full h-auto object-contain tire-spin-slow"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
               <div class="absolute inset-0 flex items-center justify-center">
                 <div
@@ -357,7 +393,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Producto 1 -->
           <div
-            class="card-glow rounded-xl overflow-hidden transition-all duration-300"
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 product-card"
           >
             <div
               class="h-48 bg-gray-800 flex items-center justify-center p-4 relative"
@@ -366,9 +402,10 @@
                 src="media/neumatico.png"
                 alt="Neumático Premium"
                 class="h-full object-contain"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
               <span
-                class="absolute top-4 right-4 bg-accent/90 text-dark text-xs font-bold px-2 py-1 rounded"
+                class="absolute top-4 right-4 bg-accent/90 text-dark text-xs font-bold px-2 py-1 rounded product-badge"
               >
                 OFERTA
               </span>
@@ -398,13 +435,14 @@
 
           <!-- Producto 2 -->
           <div
-            class="card-glow rounded-xl overflow-hidden transition-all duration-300"
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 product-card"
           >
             <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
               <img
                 src="media/neumatico.png"
                 alt="Neumático All Season"
                 class="h-full object-contain"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
             </div>
             <div class="p-6">
@@ -425,13 +463,14 @@
 
           <!-- Producto 3 -->
           <div
-            class="card-glow rounded-xl overflow-hidden transition-all duration-300"
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 product-card"
           >
             <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
               <img
                 src="media/neumatico.png"
                 alt="Neumático Urbano"
                 class="h-full object-contain"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
             </div>
             <div class="p-6">
@@ -452,7 +491,7 @@
 
           <!-- Producto 4 -->
           <div
-            class="card-glow rounded-xl overflow-hidden transition-all duration-300"
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 product-card"
           >
             <div
               class="h-48 bg-gray-800 flex items-center justify-center p-4 relative"
@@ -461,9 +500,10 @@
                 src="media/neumatico.png"
                 alt="Neumático Off-Road"
                 class="h-full object-contain"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
               <span
-                class="absolute top-4 right-4 bg-secondary/90 text-dark text-xs font-bold px-2 py-1 rounded"
+                class="absolute top-4 right-4 bg-secondary/90 text-dark text-xs font-bold px-2 py-1 rounded product-badge"
               >
                 NUEVO
               </span>
@@ -508,12 +548,15 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <!-- Brand 1 -->
-          <div class="card-glow rounded-xl p-6 flex flex-col items-center">
+          <div
+            class="card-glow rounded-xl p-6 flex flex-col items-center brand-logo-container"
+          >
             <div class="h-40 flex items-center justify-center mb-6">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Yokohama_Tire_logo.svg/1200px-Yokohama_Tire_logo.svg.png"
+                src="media/logos/yokohama.svg"
                 alt="Yokohama"
                 class="max-h-full max-w-full brand-logo"
+                onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Yokohama_Tire_logo.svg/1200px-Yokohama_Tire_logo.svg.png'"
               />
             </div>
             <h3 class="text-xl font-bold text-white">Yokohama</h3>
@@ -523,12 +566,15 @@
           </div>
 
           <!-- Brand 2 -->
-          <div class="card-glow rounded-xl p-6 flex flex-col items-center">
+          <div
+            class="card-glow rounded-xl p-6 flex flex-col items-center brand-logo-container"
+          >
             <div class="h-40 flex items-center justify-center mb-6">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hankook.svg/1200px-Hankook.svg.png"
+                src="media/logos/hankook.svg"
                 alt="Hankook"
                 class="max-h-full max-w-full brand-logo"
+                onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hankook.svg/1200px-Hankook.svg.png'"
               />
             </div>
             <h3 class="text-xl font-bold text-white">Hankook</h3>
@@ -538,12 +584,15 @@
           </div>
 
           <!-- Brand 3 -->
-          <div class="card-glow rounded-xl p-6 flex flex-col items-center">
+          <div
+            class="card-glow rounded-xl p-6 flex flex-col items-center brand-logo-container"
+          >
             <div class="h-40 flex items-center justify-center mb-6">
               <img
-                src="https://www.linglongtire.com/images/logo.png"
+                src="media/logos/linglong.png"
                 alt="LingLong"
                 class="max-h-full max-w-full brand-logo"
+                onerror="this.src='https://www.linglongtire.com/images/logo.png'"
               />
             </div>
             <h3 class="text-xl font-bold text-white">LingLong</h3>
@@ -553,12 +602,15 @@
           </div>
 
           <!-- Brand 4 -->
-          <div class="card-glow rounded-xl p-6 flex flex-col items-center">
+          <div
+            class="card-glow rounded-xl p-6 flex flex-col items-center brand-logo-container"
+          >
             <div class="h-40 flex items-center justify-center mb-6">
               <img
-                src="https://www.laufenn.com/image/logo.png"
+                src="media/logos/laufenn.svg"
                 alt="Laufenn"
                 class="max-h-full max-w-full brand-logo"
+                onerror="this.src='https://www.laufenn.com/image/logo.png'"
               />
             </div>
             <h3 class="text-xl font-bold text-white">Laufenn</h3>
@@ -739,6 +791,7 @@
                 src="media/neumatico.png"
                 alt="Neumajet"
                 class="w-full h-full object-contain tire-spin opacity-90"
+                onerror="this.src='https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png'"
               />
             </div>
           </div>
@@ -774,7 +827,7 @@
               "space-y-4",
               "border",
               "border-gray-800",
-              "animate-fadeIn"
+              "dropdown-fade"
             );
           } else {
             navMenu.classList.add("hidden");
@@ -791,15 +844,11 @@
               "space-y-4",
               "border",
               "border-gray-800",
-              "animate-fadeIn"
+              "dropdown-fade"
             );
           }
         });
-      });
-    </script>
-    <script>
-      // Funcionalidades del e-commerce
-      document.addEventListener("DOMContentLoaded", function () {
+
         // Dropdown de usuario
         const userIcon = document.querySelector(".fa-user").parentElement;
         const userDropdown = document.getElementById("userDropdown");
@@ -819,7 +868,7 @@
           }
         });
 
-        // Contador del carrito (ejemplo)
+        // Contador del carrito
         const cartButtons = document
           .querySelectorAll(".fa-shopping-cart")
           .forEach((button) => {
