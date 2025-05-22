@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neumajet - Performance Tires</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF3E00",
+              secondary: "#00F0FF",
+              accent: "#FFC700",
+              dark: "#1A1A2E",
+              darker: "#16213E",
+              light: "#E0E0E0",
+            },
+            fontFamily: {
+              sans: ['"Rajdhani"', "sans-serif"],
+              mono: ['"Fira Code"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #16213e;
+        color: #e0e0e0;
+        font-family: "Rajdhani", sans-serif;
+      }
+
+      .hero-bg {
+        background-image: linear-gradient(
+            rgba(22, 33, 62, 0.9),
+            rgba(22, 33, 62, 0.95)
+          ),
+          url("https://images.unsplash.com/photo-1558981852-426c6c22a060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .tire-spin {
+        animation: spin 8s linear infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #00f0ff;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .section-title {
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 3px;
+        bottom: -8px;
+        left: 0;
+        background: linear-gradient(90deg, #ff3e00, #00f0ff);
+        border-radius: 3px;
+      }
+
+      .card-glow {
+        transition: all 0.3s ease;
+        background: rgba(26, 26, 46, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 62, 0, 0.2);
+      }
+
+      .card-glow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(255, 62, 0, 0.3),
+          0 5px 10px -5px rgba(0, 240, 255, 0.2);
+        border-color: rgba(0, 240, 255, 0.4);
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #ff3e00, #ff8c00);
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 62, 0, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(45deg, #00a1ff, #00f0ff);
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header
+      class="bg-dark/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <div
+            class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center"
+          >
+            <i class="fas fa-tire text-white text-lg"></i>
+          </div>
+          <span
+            class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            >NEUMAJET</span
+          >
+        </div>
+        <nav class="hidden md:flex space-x-8">
+          <a href="#" class="nav-link text-light hover:text-white font-medium"
+            >Home</a
+          >
+          <a href="#" class="nav-link text-light hover:text-white font-medium"
+            >Products</a
+          >
+          <a href="#" class="nav-link text-light hover:text-white font-medium"
+            >Technology</a
+          >
+          <a href="#" class="nav-link text-light hover:text-white font-medium"
+            >About</a
+          >
+          <a href="#" class="nav-link text-light hover:text-white font-medium"
+            >Contact</a
+          >
+        </nav>
+        <div class="flex items-center space-x-4">
+          <button
+            class="px-4 py-2 rounded-full btn-primary text-white font-semibold"
+          >
+            Shop Now
+          </button>
+          <button class="md:hidden text-light hover:text-white">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center">
+      <div class="container mx-auto px-4 py-20">
+        <div class="max-w-2xl">
+          <h1 class="text-5xl md:text-6xl font-bold mb-6">
+            <span
+              class="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              >Performance</span
+            >
+            <span class="text-white">Redefined</span>
+          </h1>
+          <p class="text-xl text-light mb-8 leading-relaxed">
+            Experience the ultimate in tire technology with Neumajet's
+            cutting-edge designs, engineered for maximum grip, durability, and
+            performance in all conditions.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button
+              class="px-8 py-3 rounded-full btn-primary text-white font-semibold"
+            >
+              Explore Products
+            </button>
+            <button
+              class="px-8 py-3 rounded-full btn-secondary text-white font-semibold"
+            >
+              Watch Video <i class="fas fa-play ml-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="absolute right-10 bottom-10 hidden lg:block">
+        <div class="relative w-64 h-64">
+          <img
+            src="https://www.freepnglogos.com/uploads/tire-png/tire-png-transparent-images-png-only-28.png"
+            alt="Tire"
+            class="w-full h-full object-contain tire-spin"
+          />
+          <div
+            class="absolute inset-0 rounded-full border-4 border-transparent border-t-primary border-r-secondary animate-spin opacity-70"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-dark">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-16 section-title">
+          Our Technology
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div class="card-glow rounded-xl p-8">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-bolt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Instant Traction</h3>
+            <p class="text-light">
+              Our proprietary rubber compound provides immediate grip in all
+              weather conditions, reducing braking distance by up to 15%.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="card-glow rounded-xl p-8">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-shield-alt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Durability</h3>
+            <p class="text-light">
+              Reinforced sidewalls and advanced tread design extend tire life by
+              30% compared to conventional performance tires.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="card-glow rounded-xl p-8">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-tachometer-alt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">
+              Precision Handling
+            </h3>
+            <p class="text-light">
+              Optimized tread pattern and construction provide exceptional
+              cornering stability and responsive steering feedback.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="py-20 bg-darker">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-16 section-title">
+          Featured Products
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Product 1 -->
+          <div
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+          >
+            <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
+              <img
+                src="https://www.pngmart.com/files/15/Red-Car-Tire-PNG-Transparent-Image.png"
+                alt="Neumajet GT"
+                class="h-full object-contain"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-white">Neumajet GT</h3>
+                <span
+                  class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-semibold"
+                  >BESTSELLER</span
+                >
+              </div>
+              <p class="text-light text-sm mb-4">
+                Ultra High Performance Summer Tire
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-white">$189.99</span>
+                <button
+                  class="px-4 py-2 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 2 -->
+          <div
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+          >
+            <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
+              <img
+                src="https://www.pngmart.com/files/15/Red-Car-Tire-PNG-File.png"
+                alt="Neumajet AllSeason"
+                class="h-full object-contain"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-white">Neumajet AllSeason</h3>
+                <span
+                  class="bg-secondary/20 text-secondary px-3 py-1 rounded-full text-sm font-semibold"
+                  >NEW</span
+                >
+              </div>
+              <p class="text-light text-sm mb-4">
+                Grand Touring All-Season Tire
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-white">$159.99</span>
+                <button
+                  class="px-4 py-2 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+          >
+            <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
+              <img
+                src="https://www.pngmart.com/files/15/Red-Car-Tire-PNG-Pic.png"
+                alt="Neumajet Track"
+                class="h-full object-contain"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-white">Neumajet Track</h3>
+                <span
+                  class="bg-accent/20 text-accent px-3 py-1 rounded-full text-sm font-semibold"
+                  >RACING</span
+                >
+              </div>
+              <p class="text-light text-sm mb-4">Competition Track Day Tire</p>
+              <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-white">$249.99</span>
+                <button
+                  class="px-4 py-2 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div
+            class="card-glow rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+          >
+            <div class="h-48 bg-gray-800 flex items-center justify-center p-4">
+              <img
+                src="https://www.pngmart.com/files/15/Red-Car-Tire-PNG-Clipart.png"
+                alt="Neumajet Winter"
+                class="h-full object-contain"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-white">Neumajet Winter</h3>
+                <span
+                  class="bg-secondary/20 text-secondary px-3 py-1 rounded-full text-sm font-semibold"
+                  >WINTER</span
+                >
+              </div>
+              <p class="text-light text-sm mb-4">
+                Performance Winter/Snow Tire
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-white">$199.99</span>
+                <button
+                  class="px-4 py-2 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button
+            class="px-8 py-3 rounded-full btn-secondary text-white font-semibold"
+          >
+            View All Products <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-dark">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-16 section-title">
+          Driven By Champions
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Testimonial 1 -->
+          <div class="card-glow rounded-xl p-8">
+            <div class="flex items-center mb-6">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  alt="Alex Johnson"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h4 class="font-bold text-white">Alex Johnson</h4>
+                <p class="text-sm text-light">Professional Racer</p>
+              </div>
+            </div>
+            <p class="text-light italic mb-4">
+              "The Neumajet GT tires transformed my lap times. The grip is
+              phenomenal, especially in high-speed corners where other tires
+              would give up."
+            </p>
+            <div class="flex text-accent">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="card-glow rounded-xl p-8">
+            <div class="flex items-center mb-6">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                <img
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
+                  alt="Sarah Miller"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h4 class="font-bold text-white">Sarah Miller</h4>
+                <p class="text-sm text-light">Daily Driver</p>
+              </div>
+            </div>
+            <p class="text-light italic mb-4">
+              "I've put 30,000 miles on my Neumajet AllSeasons and they still
+              look and perform like new. The wet weather performance gives me so
+              much confidence."
+            </p>
+            <div class="flex text-accent">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="card-glow rounded-xl p-8">
+            <div class="flex items-center mb-6">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                <img
+                  src="https://randomuser.me/api/portraits/men/75.jpg"
+                  alt="Michael Chen"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h4 class="font-bold text-white">Michael Chen</h4>
+                <p class="text-sm text-light">Car Enthusiast</p>
+              </div>
+            </div>
+            <p class="text-light italic mb-4">
+              "As someone who tracks their car regularly, the Neumajet Track
+              tires are a game-changer. The heat cycling is perfect and they
+              wear incredibly evenly."
+            </p>
+            <div class="flex text-accent">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-dark to-darker">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">
+          Ready to Upgrade Your Ride?
+        </h2>
+        <p class="text-xl text-light max-w-2xl mx-auto mb-8">
+          Join thousands of satisfied drivers who've experienced the Neumajet
+          difference. Find your perfect tires today.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button
+            class="px-8 py-3 rounded-full btn-primary text-white font-semibold"
+          >
+            Shop Now
+          </button>
+          <button
+            class="px-8 py-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition border border-white/20 font-semibold"
+          >
+            Find a Dealer <i class="fas fa-map-marker-alt ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Logo and info -->
+          <div>
+            <div class="flex items-center space-x-3 mb-6">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center"
+              >
+                <i class="fas fa-tire text-white text-lg"></i>
+              </div>
+              <span
+                class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                >NEUMAJET</span
+              >
+            </div>
+            <p class="text-light mb-4">
+              Performance tires engineered for drivers who demand the best in
+              grip, durability, and handling.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-light hover:text-white transition">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-light hover:text-white transition">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-light hover:text-white transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="text-light hover:text-white transition">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Products</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Technology</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Products -->
+          <div>
+            <h3 class="text-lg font-bold text-white mb-4">Products</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Performance Tires</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >All-Season Tires</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Winter Tires</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Track & Competition</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light hover:text-white transition"
+                  >Accessories</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h3 class="text-lg font-bold text-white mb-4">Contact Us</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt text-primary mt-1 mr-3"></i>
+                <span class="text-light"
+                  >123 Performance Ave, Detroit, MI 48201</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-phone-alt text-primary mt-1 mr-3"></i>
+                <span class="text-light">(800) 555-0199</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-envelope text-primary mt-1 mr-3"></i>
+                <span class="text-light">info@neumajet.com</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-light text-sm mb-4 md:mb-0">
+            &copy; 2023 Neumajet Performance Tires. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-light hover:text-white text-sm transition"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-light hover:text-white text-sm transition"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-light hover:text-white text-sm transition"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Simple mobile menu toggle functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.querySelector(".md\\:hidden");
+        const navMenu = document.querySelector("nav");
+
+        mobileMenuButton.addEventListener("click", function () {
+          navMenu.classList.toggle("hidden");
+          navMenu.classList.toggle("flex");
+          navMenu.classList.toggle("flex-col");
+          navMenu.classList.toggle("absolute");
+          navMenu.classList.toggle("top-16");
+          navMenu.classList.toggle("right-4");
+          navMenu.classList.toggle("bg-dark");
+          navMenu.classList.toggle("p-4");
+          navMenu.classList.toggle("rounded-lg");
+          navMenu.classList.toggle("shadow-lg");
+          navMenu.classList.toggle("space-y-4");
+          navMenu.classList.toggle("space-x-8");
+        });
+      });
+    </script>
+  </body>
+</html>
